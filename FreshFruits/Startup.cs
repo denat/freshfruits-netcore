@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using FreshFruits.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FreshFruits.Services;
+using FreshFruits.Repositories.Interfaces;
+using FreshFruits.Repositories;
 
 namespace FreshFruits
 {
@@ -34,6 +37,13 @@ namespace FreshFruits
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(2);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -49,6 +59,10 @@ namespace FreshFruits
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddHttpContextAccessor();
+            services.AddTransient<SessionManager>();
+            services.AddScoped<IFruitRepository, FruitRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +82,7 @@ namespace FreshFruits
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseAuthentication();
 

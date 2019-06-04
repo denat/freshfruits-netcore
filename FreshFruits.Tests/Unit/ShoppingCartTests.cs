@@ -7,7 +7,7 @@ using Xunit;
 
 namespace FreshFruits.Tests.Unit
 {
-    public class ShoppingCartServiceTests
+    public class ShoppingCartTests
     {
         private Fruit _apple = new Fruit { Id = 1, Name = "Apple", Price = 3.99m, Color = Color.Red, Description = "An apple", Image = "apple.jpg", Rating = 4 };
         private Fruit _banana = new Fruit { Id = 2, Name = "Banana", Price = 1.99m, Color = Color.Yellow, Description = "A banana", Image = "banana.jpg", Rating = 2 };
@@ -17,7 +17,7 @@ namespace FreshFruits.Tests.Unit
         public void GetCount_NoItemsInCart_ReturnsZero()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             
             // Assert
             Assert.Equal(0, shoppingCart.Count());
@@ -27,7 +27,7 @@ namespace FreshFruits.Tests.Unit
         public void Add_SingleItem_CountIsOne()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
 
             // Act
             shoppingCart.Add(_apple);
@@ -40,7 +40,7 @@ namespace FreshFruits.Tests.Unit
         public void Add_MultipleItems_CountIsCorrect()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
 
             // Act
             shoppingCart.Add(_apple);
@@ -56,7 +56,7 @@ namespace FreshFruits.Tests.Unit
         public void Remove_EmptyCart_ThrowsException()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
 
             // Assert
             Assert.ThrowsAny<Exception>(() =>
@@ -70,7 +70,7 @@ namespace FreshFruits.Tests.Unit
         public void Remove_PreviouslyAddedItem_CountIsZero()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
 
             // Act
@@ -84,7 +84,7 @@ namespace FreshFruits.Tests.Unit
         public void Remove_OneOfTwoSameItems_DoesntRemoveAllSameItems()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
             shoppingCart.Add(_apple);
 
@@ -99,7 +99,7 @@ namespace FreshFruits.Tests.Unit
         public void Remove_TwoSameItems_CountIsZero()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
             shoppingCart.Add(_apple);
 
@@ -115,7 +115,7 @@ namespace FreshFruits.Tests.Unit
         public void Remove_ThreeTimesWhileCartHasTwoItems_ThrowsException()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
             shoppingCart.Add(_apple);
 
@@ -135,7 +135,7 @@ namespace FreshFruits.Tests.Unit
         public void CalculateTotalPrice_EmptyCart_ReturnsZero()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
 
             // Act
             var price = shoppingCart.CalculateTotalPrice();
@@ -148,7 +148,7 @@ namespace FreshFruits.Tests.Unit
         public void CalculateTotalPrice_SingleItem_ReturnsCorrectPrice()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
 
             // Act
@@ -162,7 +162,7 @@ namespace FreshFruits.Tests.Unit
         public void CalculateTotalPrice_MultipleSameItems_ReturnsCorrectPrice()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
             shoppingCart.Add(_apple);
             shoppingCart.Add(_apple);
@@ -178,7 +178,7 @@ namespace FreshFruits.Tests.Unit
         public void CalculateTotalPrice_MultipleDifferentItems_ReturnsCorrectPrice()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
             shoppingCart.Add(_apple);
             shoppingCart.Add(_banana);
             shoppingCart.Add(_orange);
@@ -194,7 +194,7 @@ namespace FreshFruits.Tests.Unit
         public void Add_FullCart_ThrowsException()
         {
             // Arrange
-            var shoppingCart = new ShoppingCartService();
+            var shoppingCart = new ShoppingCart();
 
             // Fill up the cart first
             shoppingCart.Add(_apple);

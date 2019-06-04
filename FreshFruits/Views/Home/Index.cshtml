@@ -1,16 +1,49 @@
 ﻿@model IndexViewModel
-@{ 
+@{
     ViewBag.Title = "Home";
 }
 
+@{
+    FreshFruits.Services.ShoppingCart cart = null;
+
+    if (ViewData["ShoppingCart"] != null)
+    {
+        cart = (FreshFruits.Services.ShoppingCart)ViewData["ShoppingCart"];
+    }
+}
+
 <div class="row">
+
     <div class="col-md-3">
-        <p class="lead">Fresh Fruits</p>
-        <div class="list-group">
-            <a href="#" class="list-group-item">Category 1</a>
-            <a href="#" class="list-group-item">Category 2</a>
-            <a href="#" class="list-group-item">Category 3</a>
-        </div>
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["Success"]
+            </div>
+        }
+
+        <h3>Shopping cart</h3>
+        <ul class="list-group">
+            @if (cart != null && cart.Count() > 0)
+            {
+                @foreach (var item in cart.GetItems())
+                {
+                    <li class="list-group-item">
+                        @item.Name  (@item.Price€)
+
+
+                        <a class="pull-right" asp-action="RemoveFromCart" asp-route-id="@item.Id">Remove</a>
+                    </li>
+                }
+                <li class="list-group-item active">
+                    Total: @cart.CalculateTotalPrice()€
+                </li>
+            }
+            @if (cart == null || cart.Count() == 0)
+            {
+                <li class="list-group-item">Shopping cart is empty</li>
+            }
+        </ul>
     </div>
     <div class="col-md-9">
         <div class="dropdown" style="margin-bottom:10px">
@@ -43,6 +76,9 @@
                                     <span class="glyphicon glyphicon-star"></span>
                                 }
                             </p>
+                        </div>
+                        <div class="panel-footer">
+                            <a class="btn btn-primary" asp-action="AddToCart" asp-route-id="@item.Id">Add to cart</a>
                         </div>
                     </div>
                 </div>
