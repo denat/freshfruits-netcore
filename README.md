@@ -17,10 +17,10 @@ A sample .NET Core web app, with tests
 8. Run the app!
 
 Test users:
-	Editor user
-	Username: editor@localhost
-	Password: Editor123!
+**Editor user**
+Username: editor@localhost
+Password: Editor123!
 	
-	Admin user
-	Username: admin@localhost
-	Password: Admin123!
+**Admin user**
+Username: admin@localhost
+Password: Admin123!
