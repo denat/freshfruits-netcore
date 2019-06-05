@@ -53,6 +53,20 @@ namespace FreshFruits.Tests.Unit
         }
 
         [Fact]
+        public void Add_Null_ThrowsException()
+        {
+            // Arrange
+            var shoppingCart = new ShoppingCart();
+
+            // Act
+            Assert.ThrowsAny<Exception>(() =>
+            {
+                // Act
+                shoppingCart.Add(null);
+            });
+        }
+
+        [Fact]
         public void Remove_EmptyCart_ThrowsException()
         {
             // Arrange

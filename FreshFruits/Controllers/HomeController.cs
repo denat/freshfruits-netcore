@@ -9,21 +9,22 @@ using FreshFruits.Data;
 using FreshFruits.Models.Home;
 using FreshFruits.Services;
 using FreshFruits.Repositories.Interfaces;
+using FreshFruits.Services.Interfaces;
 
 namespace FreshFruits.Controllers
 {
     public class HomeController : Controller
     {
         private IFruitRepository _fruitRepository;
-        private SessionManager _sessionManager;
+        private ISessionManager _sessionManager;
 
-        public HomeController(IFruitRepository fruitRepository, SessionManager sessionManager)
+        public HomeController(IFruitRepository fruitRepository, ISessionManager sessionManager)
         {
             _fruitRepository = fruitRepository;
             _sessionManager = sessionManager;
         }
 
-        public IActionResult Index(string sortBy)
+        public IActionResult Index(string sortBy = null)
         {
             List<Fruit> fruits = null;
 

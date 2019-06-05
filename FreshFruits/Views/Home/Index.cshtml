@@ -14,7 +14,7 @@
 
 <div class="row">
 
-    <div class="col-md-3">
+    <div class="col-md-3 shopping-cart">
         @if (TempData["Success"] != null)
         {
             <div class="alert alert-success" role="alert">
@@ -23,12 +23,12 @@
         }
 
         <h3>Shopping cart</h3>
-        <ul class="list-group">
+        <ul class="list-group shopping-cart-items">
             @if (cart != null && cart.Count() > 0)
             {
                 @foreach (var item in cart.GetItems())
                 {
-                    <li class="list-group-item">
+                    <li class="list-group-item product-item">
                         @item.Name  (@item.Price€)
 
 

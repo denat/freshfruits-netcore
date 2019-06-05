@@ -17,6 +17,9 @@ namespace FreshFruits.Services
 
         public void Add(Fruit item)
         {
+            if (item == null)
+                throw new Exception("Invalid item");
+
             if (_items.Count == _totalLimit)
                 throw new Exception("Cart is full! Try removing something first...");
 

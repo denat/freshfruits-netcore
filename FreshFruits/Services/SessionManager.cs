@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FreshFruits.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FreshFruits.Services
 {
-    public class SessionManager
+    public class SessionManager : ISessionManager
     {
         private IHttpContextAccessor _httpContextAccessor;
 

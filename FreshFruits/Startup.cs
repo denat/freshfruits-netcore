@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using FreshFruits.Services;
 using FreshFruits.Repositories.Interfaces;
 using FreshFruits.Repositories;
+using FreshFruits.Services.Interfaces;
 
 namespace FreshFruits
 {
@@ -61,7 +62,7 @@ namespace FreshFruits
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddHttpContextAccessor();
-            services.AddTransient<SessionManager>();
+            services.AddTransient<ISessionManager, SessionManager>();
             services.AddScoped<IFruitRepository, FruitRepository>();
         }
 
@@ -84,7 +85,7 @@ namespace FreshFruits
             app.UseCookiePolicy();
             app.UseSession();
 
-            app.UseAuthentication();
+            ConfigureAuth(app);
 
             SeedData.Seed(userManager, roleManager);
 
@@ -98,6 +99,12 @@ namespace FreshFruits
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
+
         }
     }
 }
