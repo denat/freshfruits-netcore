@@ -1,11 +1,15 @@
 ﻿using AngleSharp.Dom;
 using FreshFruits.Controllers;
+using FreshFruits.Data;
 using FreshFruits.Tests.Helpers;
+using FreshFruits.Tests.Integration.Setup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,11 +22,11 @@ using Xunit;
 
 namespace FreshFruits.Tests.Integration
 {
-    public class HomeControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly CustomWebApplicationFactory<Startup> _factory;
 
-        public HomeControllerTests(WebApplicationFactory<Startup> factory)
+        public HomeControllerTests(CustomWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
@@ -66,7 +70,7 @@ namespace FreshFruits.Tests.Integration
         {
             // Arrange
             var client = _factory.CreateClient();
-
+            
             // Act
             var response = await client.GetAsync("/Home/AddToCart/1");
 
